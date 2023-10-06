@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Create Patient</title>
+    <!-- Bootstrap CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <form method="POST">
+        {% csrf_token %}
+      <input name="Fnames" placeholder="First Names"/>
+      <input name="Lname" placeholder="Last Name"/>
+      <select name="gender">
+        <option selected disabled>Select Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+      <input name="DOB" placeholder="Date of Birth"/>
+      <input name="Address" placeholder="Address"/>
+      <input name="Phn_no" placeholder="Cellphone Number"/>
+      <input name="Email" placeholder="Email Address"/>
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>

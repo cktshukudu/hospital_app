@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <title>View Employees</title>
+
+        <!-- Bootstrap CSS CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- Our Custom CSS -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    </head>
+    <body>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>First Names</th>
+                    <th>Last Name</th>
+                    <th>DOB</th>
+                    <th>Staff Number</th>
+                    <th>Start Date</th>
+                    <th>Role</th>
+                    <th>Specialization</th>
+                    <th>Department</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if employees %}
+                {% for employee in employees %}
+                <tr>
+                    <td>{{ employee.id }}</td>
+                    <td>{{ employee.Fnames }}</td>
+                    <td>{{ employee.Lname }}</td>
+                    <td>{{ employee.DOB }}</td>
+                    <td>{{ employee.Staff_number }}</td>
+                    <td>{{ employee.start_date }}</td>
+                    <td>{{ employee.Role }}</td>
+                    <td>{{ employee.Specialization }}</td>
+                    <td>{{ employee.Department }}</td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </body>
+</html>

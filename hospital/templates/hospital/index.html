@@ -1,0 +1,337 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+ @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+*{
+  list-style: none;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+
+body{
+  background: #f5f6fa;
+}
+
+.wrapper .sidebar{
+  background: rgb(5, 68, 104);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 225px;
+  height: 100%;
+  padding: 20px 0;
+  transition: all 0.5s ease;
+}
+
+.wrapper .sidebar .profile{
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.wrapper .sidebar .profile img{
+  display: block;
+  width: 100px;
+  height: 100px;
+    border-radius: 50%;
+  margin: 0 auto;
+}
+
+.wrapper .sidebar .profile h3{
+  color: #ffffff;
+  margin: 10px 0 5px;
+}
+
+.wrapper .sidebar .profile p{
+  color: rgb(206, 240, 253);
+  font-size: 14px;
+}
+
+.wrapper .sidebar ul li a{
+  display: block;
+  padding: 13px 30px;
+  border-bottom: 1px solid #10558d;
+  color: rgb(241, 237, 237);
+  font-size: 16px;
+  position: relative;
+}
+
+.wrapper .sidebar ul li a .icon{
+  color: #dee4ec;
+  width: 30px;
+  display: inline-block;
+}
+
+ 
+
+.wrapper .sidebar ul li a:hover,
+.wrapper .sidebar ul li a.active{
+  color: #0c7db1;
+
+  background:white;
+    border-right: 2px solid rgb(5, 68, 104);
+}
+
+.wrapper .sidebar ul li a:hover .icon,
+.wrapper .sidebar ul li a.active .icon{
+  color: #0c7db1;
+}
+
+.wrapper .sidebar ul li a:hover:before,
+.wrapper .sidebar ul li a.active:before{
+  display: block;
+}
+
+.wrapper .section{
+  width: calc(100% - 225px);
+  margin-left: 225px;
+  transition: all 0.5s ease;
+}
+
+.wrapper .section .top_navbar{
+  background: rgb(7, 105, 185);
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+ 
+}
+
+.wrapper .section .top_navbar .hamburger a{
+  font-size: 28px;
+  color: #f4fbff;
+}
+
+.wrapper .section .top_navbar .hamburger a:hover{
+  color: #a2ecff;
+}
+
+ .wrapper .section .container{
+  margin: 30px;
+  background: #fff;
+  padding: 50px;
+  line-height: 28px;
+}
+
+body.active .wrapper .sidebar{
+  left: -225px;
+}
+
+body.active .wrapper .section{
+  margin-left: 0;
+  width: 100%;
+}
+.table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .search-bar {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        align-items: center;
+      }
+
+      .search-bar input[type="text"] {
+        padding: 5px 10px;
+        width: 500px;
+        border: 1px solid #ccc;
+        border-radius: 5px 0 0 5px;
+      }
+
+      .search-button {
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: white;
+        border: 1px solid #007bff;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .search-button:hover {
+        background-color: #0056b3;
+      }
+      form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f5f6fa;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .form-group {
+        margin: 20px;
+      }
+
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #333;
+      }
+
+      select, input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: #fff;
+      }
+
+      button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 18px;
+        margin: 20px;
+      }
+
+      button:hover {
+        background-color: #0056b3; /* Change color on hover */
+      }
+    
+    </style>
+</head>
+<body>
+   
+    <div class="wrapper">
+       <div class="section">
+    <div class="top_navbar">
+      <div class="hamburger">
+        <a href="#">
+          <i class="fas fa-bars"></i>
+        </a>
+      </div>
+    </div>
+    <div class="container">
+      <div class="search-bar">
+        <input type="text" placeholder="Search..." />
+        <button class="search-button" type="button">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+      <form action="index" method="POST" name="upform">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="inputName4">Patient:</label>
+          <select name="patient">
+            <option selected disabled>Select Patient</option>
+            {% for patient in patients %}
+            <option value="{{patient.id}}">
+              {{patient.F_names}} {{patient.L_name}}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+     
+        <div class="form-group">
+          <label for="inputStaffNo4">Employee:</label>
+          <select name="doctor">
+            <option disabled selected>Select Doctor</option> 
+            {% for doctor in doctors %}
+            <option value="{{doctor.id}}">Dr. {{doctor.Fnames}}{{doctor.Lname}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="inputCity">In Patient Date</label>
+          <input type="date" class="form-control" name="app_date" placeholder="Date"/>
+        </div>
+        <div class="form-group">
+          <label for="inputCity">Description</label>
+          <input type="text" class="form-control" name="description" placeholder="Description"/>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+  <div class="sidebar">
+    <div class="profile">
+      <img src="{% static 'images/profile.png' %}" alt="Image">
+        <h3>Tlou</h3>
+        <p>Admin</p>
+    </div>
+    <ul>
+        <li>
+            <a href="#">
+                <span class="icon"><i class="fas fa-home"></i></span>
+                <span class="item">Home</span>
+            </a>
+        </li>
+        <li>
+            <a href="dashboards">
+                <span class="icon"><i class="fas fa-desktop"></i></span>
+                <span class="item">Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="doctors_list">
+                <span class="icon"><i class="fas fa-user-friends"></i></span>
+                <span class="item">Doctors</span>
+            </a>
+        </li>
+        <li>
+            <a href="ratings">
+                <span class="icon"><i class="fas fa-star"></i></span>
+                <span class="item">Rate Employee</span>
+            </a>
+        </li>
+        <li>
+            <a href="index"  class="active">
+                <span class="icon"><i class="fas fa-edit"></i></span>
+                <span class="item">Appointment</span>
+            </a>
+        </li>
+        <li>
+            <a href="admin1">
+                <span class="icon"><i class="fas fa-chart-line"></i></span>
+                <span class="item">Feedback Report</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span class="icon"><i class="fas fa-user-shield"></i></span>
+                <span class="item">Admin</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span class="icon"><i class="fas fa-cog"></i></span>
+                <span class="item">Settings</span>
+            </a>
+        </li>
+    </ul>
+</div>
+ 
+</body>
+</html>

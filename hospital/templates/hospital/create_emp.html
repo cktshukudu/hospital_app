@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>CREATE ADMIN</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <div class="container">
+    <body>
+      <form action="emp" method="POST">
+        {% csrf_token %}
+        <input placeholder="First Names" name="names" />
+        <input placeholder="Last Name" name="l_name" />
+        <input placeholder="Date of Birth" name="DOB" />
+        <input placeholder="Staff Number" name="staff_no" />
+        <input placeholder="Start Date" name="start_date" />
+        <input placeholder="Role" name="role" />
+        <input placeholder="Specialization" name="specialization" />
+        <select name="department" aria-placeholder="Department">
+          <option value="" disabled selected>Choose Department</option>
+          {% for department in departments %}
+          <option value="{{ department.id }}">{{department.Dep_Name}}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </body>
+  </div>
+</html>

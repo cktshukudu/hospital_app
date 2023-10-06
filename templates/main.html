@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="profile">
+          <img src="{% static 'images/profile.png' %}" alt="Image">
+            <h3>Tlou</h3>
+            <p>Admin</p>
+        </div>
+        <ul>
+            <li>
+                <a href="#" class="active">
+                    <span class="icon"><i class="fas fa-home"></i></span>
+                    <span class="item">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="dashboards">
+                    <span class="icon"><i class="fas fa-desktop"></i></span>
+                    <span class="item">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="index">
+                    <span class="icon"><i class="fas fa-user-friends"></i></span>
+                    <span class="item">Doctors</span>
+                </a>
+            </li>
+            <li>
+                <a href="ratings">
+                    <span class="icon"><i class="fas fa-star"></i></span>
+                    <span class="item">Ratings</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="icon"><i class="fas fa-edit"></i></span>
+                    <span class="item">Appointments</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="icon"><i class="fas fa-chart-line"></i></span>
+                    <span class="item">Reports</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="icon"><i class="fas fa-user-shield"></i></span>
+                    <span class="item">Admin</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="icon"><i class="fas fa-cog"></i></span>
+                    <span class="item">Settings</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+</div>
+    
+</body>
+</html>
