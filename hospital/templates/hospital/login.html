@@ -1,71 +1,14 @@
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-
-<style>
-    body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    margin: 0;
-    padding: 0;
-}
-
-.login-container {
-    text-align: center;
-    margin: 100px auto; 
-    width: 50%; 
-  
-}
-
-form {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px 0px #000000;
-}
-
-h1 {
-    margin-top: 0;
-}
-
-.form-group {
-    margin-bottom: 45px;
-}
-
-label {
-    display: block;
-}
-
-input[type="text"],
-input[type="password"] {
-    width: 50%;
-    padding: 10px;
-    border: 1px solid #ccccccde;
-    border-radius: 3px;
-}
-
-button {
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-</style>
-
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
 </head>
+{% block content %}
 <body>
-    <div class="login-container">
+    <div class="container">
         <form id="login-form">
             <h1>Login</h1>
             <div class="form-group">
@@ -76,10 +19,11 @@ button:hover {
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit">Login</button>
+            <button type="submit">Login</button><br><br>
+            <a style="color: #0056b3;" href="signup">Register</a>
           
         </form>
     </div>
-
+{% endblock %}
 </body>
 </html>

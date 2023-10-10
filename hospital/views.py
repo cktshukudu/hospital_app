@@ -164,5 +164,11 @@ def login(request):
 def signup(request):
     return render(request, 'hospital/signup.html')
 
+def patient(request):
+    return render(request, 'hospital/patient.html')
+
+def doctor_view(request):
+    return render(request, 'hospital/doctor_view.html')
+
  
 

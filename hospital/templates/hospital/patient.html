@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <script src="{% static 'js/script.js' %}"></script>
 
 </head>
 <body>
@@ -22,47 +21,30 @@
       </div>
     </div>
     <div class="container">
-      <div class="ratings">
-        <form id="myForm" method="POST" >
-          {% csrf_token %}
-          <select name="employee">
-            <option selected disabled>Select Employee</option>
-            {% for employee in employees %}
-            <option  name="employee" value="{{employee.id}}">
-              {{employee.Fnames}} {{employee.Lname}}
-            </option>
-            {% endfor %}
-          </select>
-          <select name="patient">
-            <option selected disabled>Select Patient</option>
-            {% for patient in patients %}
-            <option  name="patient" value="{{patient.id}}">
-              {{patient.F_names}} {{patient.L_name}}
-            </option>
-            {% endfor %}
-          </select>
-          <select name="patient">
-            <option selected disabled>Select Waiting Time</option>
-            {% for patient in patients %}
-            <option  name="patient" value="{{patient.id}}">
-              {{patient.F_names}} {{patient.L_name}}
-            </option>
-            {% endfor %}
-          </select>
-          <div class="stars" id="stars" name="star">
-            <span class="star" data-rating="1" id="1">&#9733;</span>
-            <span class="star" data-rating="2" id="2">&#9733;</span>
-            <span class="star" data-rating="3" id="3">&#9733;</span>
-            <span class="star" data-rating="4" id="4">&#9733;</span>
-            <span class="star" data-rating="5" id="5">&#9733;</span>
-            <input type="hidden" id="value" name="value">
-          </div>
-          <input name="feedback" placeholder="Feedback" />
-          <button type="submit" id="submitBtn">Submit Rating</button>
-        </form>
+      
+      <table class="table">
+            <thead>
+              <tr>
+                <th>Patient:</th>
+                <th>Doctor:</th>
+                <th>Date:</th>
+            
+              </tr>
+            </thead>
+            <tbody>
+        
+              <tr>
+                <td>Tlou</td>
+                <td>Dr Mpho</td>
+                <td> 10/10/2023</td>
+         
+              
+              </tr>
+        
+            </tbody>
+          </table>
       </div>
     </div>
-  </div>
   <div class="sidebar">
     <div class="profile">
       <img src="{% static 'images/profile.png' %}" alt="Image">
@@ -77,7 +59,7 @@
             </a>
         </li>
         <li>
-            <a href="patient">
+            <a href="">
                 <span class="icon"><i class="fas fa-eye"></i></span>
                 <span class="item">Appointment</span>
             </a>
@@ -89,7 +71,7 @@
                 <span class="item">Rate Doctors</span>
             </a>
         </li>
-    
+     
         <li>
             <a href="#">
                 <span class="icon"><i class="fas fa-cog"></i></span>
@@ -104,9 +86,6 @@
       </li>
     </ul>
 </div>
-        
-    </div>
-{% endblock %}
- 
+ {% endblock %}
 </body>
 </html>
