@@ -1,9 +1,13 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from .models import Doctor, Employees, Department, Patients, Appointment, Rating
+from django.core.exceptions import ObjectDoesNotExist
+from .models import Doctor, Employees, Department, Patients, Appointment, Rating, CustomUsers, UserPrivileges
 from django.db.models import Avg
 import datetime
 from django.template import RequestContext
+from django.contrib import messages
+from django.db import IntegrityError
+from django.contrib.auth import authenticate
 
 def ratings(request):
         employees = Employees.objects.all()
@@ -35,10 +39,47 @@ def doctors_list(request):
        return render(request, 'hospital/doctor_list.html', {'doctors': doctors})
 
 def login(request):
-        return render(request, 'hospital/login.html')
+        if request.method == 'POST':
+               username = request.POST.get('username')
+               password = request.POST.get('password')
+               try:
+                        # user = Users.objects.get(Username=username)
+                        # if user.Password == password:
+                        auth = authenticate(request, username=username, password=password)
+                        if auth is not None:
+                                return render(request, 'hospital/signup.html')
+                        else:
+                               messages.error(request, 'Incorrect username/password')
+                               return render(request, 'hospital/login.html')
+               except CustomUsers.DoesNotExist:
+                      messages.error(request, 'Incorrect username/password')
+                      return render(request, 'hospital/login.html')
+        else:
+                return render(request, 'hospital/login.html')
 
 def signup(request):
-        return render(request, 'hospital/signup.html')
+        privileges = UserPrivileges.objects.all()
+        if request.method == 'POST':
+               username = request.POST.get('username')
+               email = request.POST.get('email')
+               password = request.POST.get('password')
+               cellnumber = request.POST.get('cellnumber')
+               staff = request.POST.get('staff')
+               privilege = request.POST.get('privilege')
+               chosenPrivilege = UserPrivileges.objects.get(id=privilege)
+               try:
+                        staff_number = Employees.objects.get(Staff_number=staff)
+                        new_user = CustomUsers(Username=username, EmailAddress=email, password=password, CellNumber=cellnumber, Employee=staff_number, UserPrivilege=chosenPrivilege)
+                        new_user.save()
+               except Employees.DoesNotExist:
+                      messages.error(request, 'Invalid staff number')
+                      return render(request, 'hospital/signup.html', {'privileges': privileges})
+               except IntegrityError:
+                      messages.error(request, 'Username, cellnumber or email already exists')
+                      return render(request, 'hospital/signup.html', {'privileges': privileges})
+               return render(request, 'hospital/login.html')
+        else:
+                return render(request, 'hospital/signup.html', {'privileges': privileges})
 
 def admin1(request):
         ratings = Rating.objects.all()
@@ -158,11 +199,6 @@ def feedback(request):
     patients = Patients.objects.all()
     return render(request, 'hospital/feedback.html', {'patients': patients})
 
-def login(request):
-    return render(request, 'hospital/login.html')
-
-def signup(request):
-    return render(request, 'hospital/signup.html')
 
 def patient(request):
     return render(request, 'hospital/patient.html')
@@ -170,5 +206,13 @@ def patient(request):
 def doctor_view(request):
     return render(request, 'hospital/doctor_view.html')
 
+def delete_user(request, id):
+    CustomUsers.objects.all().delete()
+    return  render(request, 'hospital/doctor_view.html')
+
  
 
+def add_privilege(request, name):
+       user = UserPrivileges(Name=name)
+       user.save()
+       return render(request, 'hospital/doctor_view.html')

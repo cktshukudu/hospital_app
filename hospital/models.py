@@ -1,12 +1,5 @@
 from django.db import models
-
-class Users(models.Model):
-    Username = models.CharField(max_length=20)
-    CellNumber = models.CharField(max_length=15)
-    EmailAddress = models.CharField(max_length=50)
-    Password = models.CharField(max_length=100)
-    SetByUser = models.BooleanField(default=False)
-    UserPrivilege = models.CharField(max_length=50)
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 class Doctor(models.Model):
     name = models.CharField(max_length=100)
@@ -43,6 +36,48 @@ class Employees(models.Model):
     NumOfRates = models.IntegerField(default=0)
     def __str__(self):
         return self.Fnames
+    
+class UserManager(BaseUserManager):
+    def create_user(self, Username,password=None, **extra_fields):
+        if not Username:
+            raise ValueError('The Email field must be set')
+        Username = self.using(Username)
+        user = self.model(email=Username, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+    
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        return self.create_user(email, password, **extra_fields)
+    
+class UserPrivileges(models.Model):
+    Name = models.CharField(max_length=20, unique=True)
+    def __str__(self):
+        return self.Name
+
+
+class CustomUsers(AbstractBaseUser, PermissionsMixin):
+    Username = models.CharField(max_length=20, unique=True)
+    CellNumber = models.CharField(max_length=15, unique=True)
+    EmailAddress = models.CharField(max_length=50, unique=True)
+    SetByUser = models.BooleanField(default=False)
+    UserPrivilege = models.ForeignKey(UserPrivileges, on_delete=models.PROTECT)
+    Employee = models.ForeignKey(Employees, on_delete=models.PROTECT, unique=True)
+    last_login= models.CharField(max_length=50, unique=True)
+    
+    USERNAME_FIELD = 'Username'
+    REQUIRED_FIELDS = ['CellNumber', 'EmailAddress', 'UserPrivilege', 'Employee']
+    def __str__(self):
+        return self.Username
+
 
 class Patients(models.Model):
     F_names = models.CharField(max_length=100)

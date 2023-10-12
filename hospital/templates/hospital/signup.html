@@ -7,27 +7,100 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
  
 </head>
-{% block content %}
 <body>
-    <div class="container">
-        <form id="signup-form">
+    <div class="container" >
+        <form action="signup" method="POST">
+            {% csrf_token %}
             <h1>Sign Up</h1>
             <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
             </div>
             <div class="form-group">
+                <label for="cellnumber">Cellphone Number:</label>
+                <input type="text" id="cellnumber" name="cellnumber" required>
+            </div>
+            <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
             </div>
             <div class="form-group">
+                <label for="staff">Staff Number:</label>
+                <input type="text" id="staff" name="staff" required>
+            </div>
+            <label for="privilege">User Privilege:</label>
+            <select name="privilege" aria-placeholder="privilege">
+                <option value="" selected disabled>Choose User Privilege</option>
+                {% for privilege in privileges %}
+                    <option value="{{ privilege.id }}">{{privilege.Name}}</option>
+                {% endfor %}
+            </select>
+            <div class="form-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit">Sign Up</button><br><br>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <label id="comment"></label>
+            </div>
+            {% for message in messages %}
+                <p id="messages">{{message}}</p>
+            {% endfor %}
+            <button type="submit" id="button">Sign Up</button><br><br>
             <a style="color: #0056b3;" href="/">Login</a>
         </form>
     </div>
-{% endblock %}
-</body>
 </html>
+<script>
+    const username = document.getElementById('username');
+    const cellnumber = document.getElementById('cellnumber');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const staff = document.getElementById('staff');
+    document.getElementById('button').hidden =true
+    password.addEventListener("input", samePassword)
+    confirmPassword.addEventListener("input", samePassword)
+    username.addEventListener("input", fieldsPopulated)
+    cellnumber.addEventListener("input", fieldsPopulated)
+    email.addEventListener("input", fieldsPopulated)
+    staff.addEventListener("input", fieldsPopulated)
+    function fieldsPopulated()
+    {
+        if(username.value != '' && cellnumber.value != '' && email.value != '' && password.value != '' && confirmPassword.value != '' && staff.value != '')
+        {
+            document.getElementById('comment').innerText = ''
+            document.getElementById('button').hidden = false
+        }
+        else if(username.value != '' | cellnumber.value != '' | email.value != '' | password.value != '' | confirmPassword.value != '' | staff.value != '')
+        {
+            document.getElementById('comment').innerText = ''
+            document.getElementById('button').hidden = true
+        }
+    }
+    function samePassword()
+    {
+        
+        if(password.value != confirmPassword.value)
+        {
+            document.getElementById('comment').innerText = 'not the same password'
+            
+            document.getElementById('button').hidden =true
+        }
+        else if(password.value == confirmPassword.value)
+        {
+            
+            if(username.value != '' && cellnumber.value != '' && email.value != '' && staff.value != '')
+            {
+                document.getElementById('comment').innerText = ''
+                document.getElementById('button').hidden = false
+            }
+            else if(username.value == '' && cellnumber.value == '' && email.value == '' && staff.value != '')
+            {
+                document.getElementById('comment').innerText = 'Please populate other fields'
+                document.getElementById('button').hidden = true
+            }
+        }
+    }
+</script>
