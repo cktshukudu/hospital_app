@@ -1,13 +1,14 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Doctor, Employees, Department, Patients, Appointment, Rating, CustomUsers, UserPrivileges
+from .models import Doctor, Employees, Department, Patients, Appointment, Rating, UserPrivileges, AppovedUsers
 from django.db.models import Avg
 import datetime
 from django.template import RequestContext
 from django.contrib import messages
 from django.db import IntegrityError
 from django.contrib.auth import authenticate
+from cryptography.fernet import Fernet
 
 def ratings(request):
         employees = Employees.objects.all()
@@ -43,20 +44,20 @@ def login(request):
                username = request.POST.get('username')
                password = request.POST.get('password')
                try:
-                        # user = Users.objects.get(Username=username)
-                        # if user.Password == password:
-                        auth = authenticate(request, username=username, password=password)
-                        if auth is not None:
-                                return render(request, 'hospital/signup.html')
-                        else:
-                               messages.error(request, 'Incorrect username/password')
-                               return render(request, 'hospital/login.html')
-               except CustomUsers.DoesNotExist:
+                     user = AppovedUsers.objects.get(username=username)
+                     if password == user.password:
+                            user.authenticated = True
+                            user.last_login = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                            user.save()
+                            return render(request, 'hospital/admin1.html')
+                     else:
+                            messages.error(request, 'Incorrect username/password')
+                            return render(request, 'hospital/login.html')
+               except AppovedUsers.DoesNotExist:
                       messages.error(request, 'Incorrect username/password')
                       return render(request, 'hospital/login.html')
         else:
                 return render(request, 'hospital/login.html')
-
 def signup(request):
         privileges = UserPrivileges.objects.all()
         if request.method == 'POST':
@@ -68,19 +69,20 @@ def signup(request):
                privilege = request.POST.get('privilege')
                chosenPrivilege = UserPrivileges.objects.get(id=privilege)
                try:
-                        staff_number = Employees.objects.get(Staff_number=staff)
-                        new_user = CustomUsers(Username=username, EmailAddress=email, password=password, CellNumber=cellnumber, Employee=staff_number, UserPrivilege=chosenPrivilege)
-                        new_user.save()
+                     staff_number = Employees.objects.get(Staff_number=staff)
+                     new_user = AppovedUsers(username=username, EmailAddress=email, password=password, CellNumber=cellnumber, Employee=staff_number, UserPrivilege=chosenPrivilege, last_login=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), key='')
+                     new_user.save()
+                     return render(request, 'hospital/login.html')
                except Employees.DoesNotExist:
-                      messages.error(request, 'Invalid staff number')
-                      return render(request, 'hospital/signup.html', {'privileges': privileges})
+                     messages.error(request, 'Invalid staff number')
+                     return render(request, 'hospital/signup.html', {'privileges': privileges})
                except IntegrityError:
-                      messages.error(request, 'Username, cellnumber or email already exists')
-                      return render(request, 'hospital/signup.html', {'privileges': privileges})
-               return render(request, 'hospital/login.html')
+                     messages.error(request, 'Username, cellnumber or email already exists')
+                     return render(request, 'hospital/signup.html', {'privileges': privileges})
+               
         else:
                 return render(request, 'hospital/signup.html', {'privileges': privileges})
-
+        
 def admin1(request):
         ratings = Rating.objects.all()
         return render(request, 'hospital/admin1.html',{'ratings':ratings})
@@ -207,7 +209,7 @@ def doctor_view(request):
     return render(request, 'hospital/doctor_view.html')
 
 def delete_user(request, id):
-    CustomUsers.objects.all().delete()
+    AppovedUsers.objects.all().delete()
     return  render(request, 'hospital/doctor_view.html')
 
  
