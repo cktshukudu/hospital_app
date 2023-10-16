@@ -13,7 +13,7 @@ class Doctor(models.Model):
     
 class Department(models.Model):
     Dep_Name = models.CharField(max_length=50, unique=True)
-    Description = models.CharField(max_length=10000, unique=True)
+    Description = models.CharField(max_length=190, unique=True)
     Phone = models.CharField(max_length=13, unique=True)
     Email = models.CharField(max_length=100, unique=True)
     Location = models.CharField(max_length=100, unique=True)
@@ -72,7 +72,7 @@ class Appointment(models.Model):
     Patient = models.ForeignKey(Patients, on_delete=models.CASCADE)
     Doctor = models.ForeignKey(Employees, on_delete=models.PROTECT)
     App_status = models.CharField(max_length=100, default='scheduled',choices=[('scheduled', 'Scheduled' ), ( 'completed', 'Attended'), ( 'cancelled', 'Cancelled')])
-    Description = models.CharField(max_length=2500)
+    Description = models.CharField(max_length=150)
     Date_set = models.DateTimeField()
     App_date = models.DateTimeField()
     Date_updated = models.DateTimeField()
@@ -89,11 +89,11 @@ class Rooms(models.Model):
 class Files(models.Model):
     Doc_ID = models.ForeignKey(Employees, on_delete=models.PROTECT)
     Pat_ID = models.ForeignKey(Patients, on_delete=models.PROTECT)
-    Symptoms = models.CharField(max_length=2500)
-    Diagnosis = models.CharField(max_length=10000)
+    Symptoms = models.CharField(max_length=150)
+    Diagnosis = models.CharField(max_length=150)
 
 class Rating(models.Model):
     Patient = models.ForeignKey(Patients, on_delete=models.PROTECT)
     Employee = models.ForeignKey(Employees, on_delete=models.PROTECT)
     Rate = models.IntegerField()
-    Feedback = models.CharField(max_length=15000)
+    Feedback = models.CharField(max_length=100)

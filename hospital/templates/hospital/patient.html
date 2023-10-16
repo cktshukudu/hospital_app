@@ -48,16 +48,12 @@
   <div class="sidebar">
     <div class="profile">
       <img src="{% static 'images/profile.png' %}" alt="Image">
-        <h3>Tlou</h3>
-        <p>Patient</p>
+      {% if user %}
+      <h3>{{user.username}}</h3>
+      {% endif %}
     </div>
     <ul>
-        <li>
-            <a href="#">
-                <span class="icon"><i class="fas fa-home"></i></span>
-                <span class="item">Home</span>
-            </a>
-        </li>
+        
         <li>
             <a href="">
                 <span class="icon"><i class="fas fa-eye"></i></span>
@@ -72,14 +68,9 @@
             </a>
         </li>
      
+        
         <li>
-            <a href="#">
-                <span class="icon"><i class="fas fa-cog"></i></span>
-                <span class="item">Settings</span>
-            </a>
-        </li>
-        <li>
-          <a href="#">
+          <a href="/">
               <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
               <span class="item">Logout</span>
           </a>

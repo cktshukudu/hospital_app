@@ -1,113 +1,312 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hospital Dashboard</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link rel="stylesheet" href="styles.css">
-<style>
-    body {
-  font-family: Arial, sans-serif;
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <style>
+ @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+*{
+  list-style: none;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
 }
 
-.container {
-  max-width: 1200px;
+
+body{
+  background: #f5f6fa;
+}
+
+.wrapper .sidebar{
+  background: rgb(5, 68, 104);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 225px;
+  height: 105%;
+  padding: 5px 0;
+  transition: all 0.5s ease;
+}
+
+.wrapper .sidebar .profile{
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.wrapper .sidebar .profile img{
+  display: block;
+  width: 100px;
+  height: 100px;
+    border-radius: 50%;
   margin: 0 auto;
-  padding: 20px;
 }
 
-.card {
-  border: none;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+.wrapper .sidebar .profile h3{
+  color: #ffffff;
+  margin: 10px 0 5px;
 }
 
-.card-header {
-  background-color: #007bff;
-  color: white;
+.wrapper .sidebar .profile p{
+  color: rgb(206, 240, 253);
+  font-size: 14px;
 }
 
-.canvas-container {
+.wrapper .sidebar ul li a{
+  display: block;
+  padding: 13px 30px;
+  border-bottom: 1px solid #10558d;
+  color: rgb(241, 237, 237);
+  font-size: 16px;
   position: relative;
-  width: 100%;
-  height: 100%;
 }
 
-</style>
+.wrapper .sidebar ul li a .icon{
+  color: #dee4ec;
+  width: 30px;
+  display: inline-block;
+}
+
+ 
+
+.wrapper .sidebar ul li a:hover,
+.wrapper .sidebar ul li a.active{
+  color: #0c7db1;
+
+  background:white;
+    border-right: 2px solid rgb(5, 68, 104);
+}
+
+.wrapper .sidebar ul li a:hover .icon,
+.wrapper .sidebar ul li a.active .icon{
+  color: #0c7db1;
+}
+
+.wrapper .sidebar ul li a:hover:before,
+.wrapper .sidebar ul li a.active:before{
+  display: block;
+}
+
+.wrapper .section{
+  width: calc(100% - 225px);
+  margin-left: 225px;
+  transition: all 0.5s ease;
+}
+
+.wrapper .section .top_navbar{
+  background: rgb(7, 105, 185);
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+ 
+}
+
+.wrapper .section .top_navbar .hamburger a{
+  font-size: 28px;
+  color: #f4fbff;
+}
+
+.wrapper .section .top_navbar .hamburger a:hover{
+  color: #a2ecff;
+}
+
+ .wrapper .section .container{
+  margin: 30px;
+  background: #fff;
+  padding: 50px;
+  line-height: 28px;
+}
+
+body.active .wrapper .sidebar{
+  left: -225px;
+}
+
+body.active .wrapper .section{
+  margin-left: 0;
+  width: 100%;
+}
+.table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .search-bar {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        align-items: center;
+      }
+
+      .search-bar input[type="text"] {
+        padding: 5px 10px;
+        width: 500px;
+        border: 1px solid #ccc;
+        border-radius: 5px 0 0 5px;
+      }
+
+      .search-button {
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: white;
+        border: 1px solid #007bff;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .search-button:hover {
+        background-color: #0056b3;
+      }
+      form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f5f6fa;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .form-group {
+        margin: 20px;
+      }
+
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #333;
+      }
+
+      select, input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: #fff;
+      }
+
+      button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 18px;
+        margin: 20px;
+      }
+
+      button:hover {
+        background-color: #0056b3; /* Change color on hover */
+      }
+
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1 class="mt-4">Hospital Dashboard</h1>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="card mt-4">
-          <div class="card-header">Patients by Department</div>
-          <div class="card-body">
-            <canvas id="departmentChart"></canvas>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card mt-4">
-          <div class="card-header">Monthly Revenue</div>
-          <div class="card-body">
-            <canvas id="revenueChart"></canvas>
-          </div>
-        </div>
+
+    <div class="wrapper">
+       <div class="section">
+    <div class="top_navbar">
+      <div class="hamburger">
       </div>
     </div>
+    <div class="container">
+      <iframe title="hss" width="600" height="473.5" src="https://app.powerbi.com/view?r=eyJrIjoiYzIxZDBkOTItNjYwYy00OTJlLWE0NGUtYTg4NmU5NzIzMDI2IiwidCI6ImZhNzg1YWNkLTM2ZWYtNDFiYy04YTk0LTg5ODQxMzI3ZTA0NSIsImMiOjh9" frameborder="0" allowFullScreen="true"></iframe>
+
+    </div>
   </div>
-<script>
-    // Sample data for visualization
-const departmentData = {
-  labels: ['Cardiology', 'Orthopedics', 'Neurology', 'Dermatology', 'Ophthalmology'],
-  datasets: [{
-    label: 'Number of Patients',
-    data: [120, 90, 70, 50, 60],
-    backgroundColor: ['#007bff', '#28a745', '#dc3545', '#ffc107', '#17a2b8'],
-  }]
-};
+        <div class="sidebar">
+            <div class="profile">
+              <img src="{% static 'images/profile.png' %}" alt="Image">
+              {% if user %}
+              <h3>{{user.username}}</h3>
+              {% endif %}
+            </div>
+            <ul>
+              <li>
+                <a href="dashboards" class="active">
+                    <span class="icon"><i class="fas fa-desktop"></i></span>
+                    <span class="item">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="doctors_list">
+                    <span class="icon"><i class="fas fa-user-friends"></i></span>
+                    <span class="item">Doctors</span>
+                </a>
+            </li>
+          
+            <li>
+                <a href="index">
+                    <span class="icon"><i class="fas fa-edit"></i></span>
+                    <span class="item">Add App.ment</span>
+                </a>
+            </li>
+            <li>
+              <a href="view_appointment">
+                  <span class="icon"><i class="fas fa-eye"></i></span>
+                  <span class="item">View App.ment</span>
+              </a>
+          </li>
+            <li>
+              <a href="emp">
+                  <span class="icon"><i class="fas fa-edit"></i></span>
+                  <span class="item">Add Employee</span>
+              </a>
+          </li>
+          <li>
+            <a href="employees">
+                <span class="icon"><i class="fas fa-eye"></i></span>
+                <span class="item">View Employee</span>
+            </a>
+        </li>
+          <li>
+            <a href="patient" >
+                <span class="icon"><i class="fas fa-edit"></i></span>
+                <span class="item">Add Patient</span>
+            </a>
+        </li>
+            <li>
+                <a href="admin1" >
+                    <span class="icon"><i class="fas fa-chart-line"></i></span>
+                    <span class="item">Feedback Report</span>
+                </a>
+            </li>
+            <li>
+              <a href="ratings">
+                  <span class="icon"><i class="fas fa-star"></i></span>
+                  <span class="item">Rate Doctors</span>
+              </a>
+          </li>
+          <li>
+            <a href="/">
+                <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
+                <span class="item">Logout</span>
+            </a>
+        </li>
+            </ul>
+        </div>
+        
+    </div>
 
-const revenueData = {
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-  datasets: [{
-    label: 'Revenue (R)',
-    data: [15000, 18000, 22000, 21000, 25000, 23000],
-    borderColor: '#007bff',
-    fill: false,
-  }]
-};
-
-// Create charts
-const departmentChart = new Chart(document.getElementById('departmentChart').getContext('2d'), {
-  type: 'bar',
-  data: departmentData,
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    }
-  }
-});
-
-const revenueChart = new Chart(document.getElementById('revenueChart').getContext('2d'), {
-  type: 'line',
-  data: revenueData,
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    }
-  }
-});
-
-</script>
 </body>
 </html>
